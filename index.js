@@ -27,22 +27,43 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-    const database = client.db("usersDB");
-    const userCollection = database.collection("users");
+    const productCollection = client.db("productsDB").collection("product");
 
-app.get('/users', async(req, res) => {
-    const cursor = userCollection.find();
-    const result = await cursor.toArray();
-    res.send(result);
-})
+    
+    app.get('/product', async(req, res) =>{
+      const cursor = productCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
 
 
-    app.post('/users', async(req, res) =>{
-        const user = req.body;
-        console.log('new user', user);
-        const result = await userCollection.insertOne(user);
-        res.send(result);
-});
+    app.post('/product', async(req, res) =>{
+      const newProduct = req.body;
+      console.log(newProduct);
+      const result = await productCollection.insertOne(newProduct);
+      res.send(result);
+    })
+
+
+
+
+
+//     const database = client.db("usersDB");
+//     const userCollection = database.collection("users");
+
+// app.get('/users', async(req, res) => {
+//     const cursor = userCollection.find();
+//     const result = await cursor.toArray();
+//     res.send(result);
+// })
+
+
+//     app.post('/users', async(req, res) =>{
+//         const user = req.body;
+//         console.log('new user', user);
+//         const result = await userCollection.insertOne(user);
+//         res.send(result);
+// });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
