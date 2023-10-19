@@ -25,9 +25,41 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
-    const productCollection = client.db("productsDB").collection("product");
+    
+
+
+
+//     const database = client.db("usersDB");
+//     const userCollection = database.collection("users");
+
+// app.get('/users', async(req, res) => {
+//     const cursor = userCollection.find();
+//     const result = await cursor.toArray();
+//     res.send(result);
+// })
+
+
+//     app.post('/users', async(req, res) =>{
+//         const user = req.body;
+//         console.log('new user', user);
+//         const result = await userCollection.insertOne(user);
+//         res.send(result);
+// });
+
+    // Send a ping to confirm a successful connection
+    // await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    // await client.close();
+  }
+}
+run().catch(console.dir);
+
+
+const productCollection = client.db("productsDB").collection("product");
 
     
     app.get('/product', async(req, res) =>{
@@ -72,35 +104,6 @@ app.put('/product/:id', async(req, res) => {
     const result = await productCollection.updateOne(filter, product, options)
     res.send(result);
 })
-
-
-
-//     const database = client.db("usersDB");
-//     const userCollection = database.collection("users");
-
-// app.get('/users', async(req, res) => {
-//     const cursor = userCollection.find();
-//     const result = await cursor.toArray();
-//     res.send(result);
-// })
-
-
-//     app.post('/users', async(req, res) =>{
-//         const user = req.body;
-//         console.log('new user', user);
-//         const result = await userCollection.insertOne(user);
-//         res.send(result);
-// });
-
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    // await client.close();
-  }
-}
-run().catch(console.dir);
 
 
 app.get('/', (req, res) =>{
